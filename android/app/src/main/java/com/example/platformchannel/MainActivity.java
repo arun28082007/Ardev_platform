@@ -39,6 +39,17 @@ public class MainActivity extends FlutterActivity {
           chargingStateChangeReceiver = createChargingStateChangeReceiver(events);
           registerReceiver(
               chargingStateChangeReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+
+
+        private BroadcastReceiver BootReceiver;
+        @Override
+        public void onListen(Object arguments, EventSink events) {
+          BootReceiver = createBootReceiver(events);
+          registerReceiver(
+              BootReceiver, new IntentFilter(Intent.ACTION_BOOT_COMPLETED));
+
+
+
         }
 
         @Override
@@ -85,6 +96,20 @@ public class MainActivity extends FlutterActivity {
       }
     };
   }
+
+
+
+  private BroadcastReceiver createBootReceiver(final EventSink events) {
+    return new BroadcastReceiver() {
+      @Override
+      public void onReceive(Context context, Intent intent) {
+         Log.d("get boot broadcast");
+        }
+      }
+    };
+  }
+
+
 
   private int getBatteryLevel() {
     if (VERSION.SDK_INT >= VERSION_CODES.LOLLIPOP) {
